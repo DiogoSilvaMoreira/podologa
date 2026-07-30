@@ -398,7 +398,7 @@ async function responde(texto){
     digitando(false);
     const el = document.createElement("div");
     el.className = "erro";
-    el.textContent = "A conexão caiu por um instante. Envie a mensagem de novo.";
+    el.textContent = "Erro: " + (e.message || "falha desconhecida");
     $("chat").appendChild(el);
   } finally {
     ocupado = false;
