@@ -28,7 +28,7 @@ export default async function handler(req, res) {
         Authorization: `Bearer ${process.env.GROQ_API_KEY}`
       },
       body: JSON.stringify({
-        model: "llama-3.3-70b-versatile",
+        model: "openai/gpt-oss-120b",
         temperature: 0.6,
         max_tokens: 600,
         response_format: { type: "json_object" },
@@ -39,7 +39,7 @@ export default async function handler(req, res) {
     if (!r.ok) {
       const detalhe = await r.text();
       console.error("groq:", r.status, detalhe);
-      return res.status(502).json({ erro: "falha na geração" });
+      return res.status(502).json({ erro: "falha na geração", detalhe });
     }
 
     const dados = await r.json();
@@ -47,6 +47,6 @@ export default async function handler(req, res) {
     return res.status(200).json({ texto });
   } catch (e) {
     console.error(e);
-    return res.status(500).json({ erro: "falha na geração" });
+    return res.status(500).json({ erro: "falha na geração", detalhe: String(e) });
   }
 }

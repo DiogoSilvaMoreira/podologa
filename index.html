@@ -372,7 +372,7 @@ async function responde(texto){
       body: JSON.stringify({ system: instrucoes(), messages: historico })
     });
     const dados = await r.json();
-    if (dados.erro) throw new Error(dados.erro);
+    if (dados.erro) throw new Error(dados.detalhe || dados.erro);
     const bruto = (dados.texto || "").replace(/```json|```/g,"").trim();
     let obj;
     try { obj = JSON.parse(bruto); }
